@@ -954,4 +954,13 @@ public interface I_C_Invoice
 	public int getUser2_ID();
 
 	public org.compiere.model.I_C_ElementValue getUser2() throws RuntimeException;
+	
+	/** Column name IsTrackAsAsset */
+    public static final String COLUMNNAME_IsTrackAsAsset = "IsTrackAsAsset";
+
+	/** Set Track As Asset	  */
+	public void setIsTrackAsAsset (boolean IsTrackAsAsset);
+
+	/** Get Track As Asset	  */
+	public boolean isTrackAsAsset();
 }

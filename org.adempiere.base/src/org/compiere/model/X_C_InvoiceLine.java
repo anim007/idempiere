@@ -1160,4 +1160,27 @@ public class X_C_InvoiceLine extends PO implements I_C_InvoiceLine, I_Persistent
 			 return 0;
 		return ii.intValue();
 	}
+
+
+	
+	/** Set Track As Asset.
+		@param IsTrackAsAsset Track As Asset	  */
+	public void setIsTrackAsAsset (boolean IsTrackAsAsset)
+	{
+		set_Value (COLUMNNAME_IsTrackAsAsset, Boolean.valueOf(IsTrackAsAsset));
+	}
+	
+	/** Get Track As Asset.
+		@return Track As Asset	  */
+	public boolean isTrackAsAsset () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsTrackAsAsset);
+		if (oo != null) 
+		{
+			if (oo instanceof Boolean) 
+				return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
 }

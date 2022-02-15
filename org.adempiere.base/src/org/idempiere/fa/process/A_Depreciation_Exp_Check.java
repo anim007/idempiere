@@ -23,7 +23,6 @@ import org.compiere.util.TimeUtil;
  * @author Anca Bradau www.arhipac.ro
  *
  */
-@org.adempiere.base.annotation.Process
 public class A_Depreciation_Exp_Check extends SvrProcess
 {
 	private boolean p_IsTest = true;
@@ -135,7 +134,7 @@ public class A_Depreciation_Exp_Check extends SvrProcess
 		if (!exp.getDateAcct().equals(dateAcctNew))
 		{
 			addLog("OLD1: "+exp);
-			MDepreciationEntry.deleteFacts(exp);
+//			MDepreciationEntry.deleteFacts(exp);
 			exp.setDateAcct(dateAcctNew);
 			exp.setA_Depreciation_Entry_ID(0);
 			exp.saveEx();
@@ -152,7 +151,7 @@ public class A_Depreciation_Exp_Check extends SvrProcess
 			if (!period.isInPeriod(exp.getDateAcct()))
 			{
 				addLog("OLD2: "+exp);
-				MDepreciationEntry.deleteFacts(exp);
+//				MDepreciationEntry.deleteFacts(exp);
 				exp.setA_Depreciation_Entry_ID(0);
 				exp.saveEx();
 				addLog("NEW2: "+exp);

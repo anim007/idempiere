@@ -472,4 +472,25 @@ public interface I_A_Asset_Group_Acct
 
 	/** Get Use Life - Years (fiscal)	  */
 	public int getUseLifeYears_F();
+	
+
+	/** Column name A_Asset_Clearing_Acct */
+    public static final String COLUMNNAME_A_Asset_Clearing_Acct = "A_Asset_Clearing_Acct";
+
+	/** Set Asset Clearing Acct	  */
+	public void setA_Asset_Clearing_Acct (int A_Asset_Clearing_Acct);
+
+	/** Get Asset Clearing Acct	  */
+	public int getA_Asset_Clearing_Acct();
+
+	public I_C_ValidCombination getA_Asset_Clearing_A() throws RuntimeException;
+	
+	/** Column name A_Salvage_Value */
+    public static final String COLUMNNAME_A_Salvage_Value = "A_Salvage_Value";
+
+	/** Set Asset Salvage Value	  */
+	public void setA_Salvage_Value (BigDecimal A_Salvage_Value);
+
+	/** Get Asset Salvage Value	  */
+	public BigDecimal getA_Salvage_Value();
 }

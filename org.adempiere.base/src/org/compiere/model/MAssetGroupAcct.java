@@ -28,18 +28,20 @@ public class MAssetGroupAcct extends X_A_Asset_Group_Acct
 	{
 		return new Query(ctx, Table_Name, COLUMNNAME_A_Asset_Group_ID+"=?", null)
 					.setParameters(new Object[]{A_Asset_Group_ID})
+					.setOnlyActiveRecords(true)
 					.list();
 	}
 	
 	/**
 	 * Get Asset Group Accountings for given group
 	 */
-	public static List<MAssetGroupAcct>  forA_Asset_Group_ID(Properties ctx, int A_Asset_Group_ID, String postingType)
+	public static MAssetGroupAcct forA_Asset_Group_ID(Properties ctx, int A_Asset_Group_ID, String postingType)
 	{
 		final String whereClause = COLUMNNAME_A_Asset_Group_ID+"=? AND "+COLUMNNAME_PostingType+"=?";
 		return new Query(ctx, Table_Name, whereClause, null)
 					.setParameters(new Object[]{A_Asset_Group_ID, postingType})
-					.list();
+					.setOnlyActiveRecords(true)
+					.firstOnly();
 	}
 	
 	/**
@@ -73,7 +75,13 @@ public class MAssetGroupAcct extends X_A_Asset_Group_Acct
 		if (m_parent == null)
 		{
 			int A_Asset_Group_ID = getA_Asset_Group_ID();
-			m_parent = MAssetGroup.getCopy(getCtx(), A_Asset_Group_ID, get_TrxName());
+	
+			if (is_new())
+				m_parent = new MAssetGroup(getCtx(), A_Asset_Group_ID, get_TrxName());
+			
+			else
+				m_parent = MAssetGroup.get(getCtx(), A_Asset_Group_ID);
+			
 		}
 		return m_parent;
 	}
@@ -98,10 +106,9 @@ public class MAssetGroupAcct extends X_A_Asset_Group_Acct
 
 	public boolean beforeSave(boolean newRecord)
 	{
-		if (! UseLifeImpl.get(this).validate())
-		{
+		if (!UseLifeImpl.get(this).validate())
 			return false;
-		}
+		
 		return true;
 	}
 	
@@ -109,31 +116,21 @@ public class MAssetGroupAcct extends X_A_Asset_Group_Acct
 		int index = get_ColumnIndex(ColumnName);
 		if (index < 0)
 			return false;
+		
 		return set_ValueNoCheck(ColumnName, value);
 	}
 	public Object get_AttrValue(String ColumnName) {
 		int index = get_ColumnIndex(ColumnName);
 		if (index < 0)
 			return null;
+		
 		return get_Value(index);
 	}
 	public boolean is_AttrValueChanged(String ColumnName) {
 		int index = get_ColumnIndex(ColumnName);
 		if (index < 0)
 			return false;
+		
 		return is_ValueChanged(index);
 	}
-	/**
-	 * Get Asset Group Accountings for given group
-	 */
-	public static MAssetGroupAcct forA_Asset_Group_ID(Properties ctx, int A_Asset_Group_ID, String postingType,
-			int C_AcctSchema_ID) {
-		final String whereClause = COLUMNNAME_A_Asset_Group_ID+"=? AND "+COLUMNNAME_PostingType+"=? AND " + COLUMNNAME_C_AcctSchema_ID +"=? " ;
-		return new Query(ctx, Table_Name, whereClause, null)
-					.setParameters(new Object[]{A_Asset_Group_ID, postingType, C_AcctSchema_ID})
-					.firstOnly();
-	}
-
-	
-
 }	//	MAssetGroupAcct

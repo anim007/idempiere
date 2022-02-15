@@ -15,13 +15,12 @@ import org.compiere.util.DB;
  * Create Depreciation
  * @author Teo Sarca, SC ARHIPAC SERVICE SRL
  */
-@org.adempiere.base.annotation.Process
 public class A_Depreciation_Workfile_Build extends SvrProcess
 {
 	private int A_Depreciation_Workfile_ID = 0;
 	
 	protected void prepare() {
-		A_Depreciation_Workfile_ID = getRecord_ID();
+		
 		ProcessInfoParameter[] para = getParameter();
 		for (int i = 0; i < para.length; i++)
 		{
@@ -38,7 +37,11 @@ public class A_Depreciation_Workfile_Build extends SvrProcess
 	}
 	
 	protected String doIt() throws Exception {
+		
+		A_Depreciation_Workfile_ID = getRecord_ID();
+		
 		int cnt_all = 0;
+		
 		if (A_Depreciation_Workfile_ID > 0) {
 			MDepreciationWorkfile wk = new MDepreciationWorkfile(getCtx(), A_Depreciation_Workfile_ID, get_TrxName());
 			wk.buildDepreciation();

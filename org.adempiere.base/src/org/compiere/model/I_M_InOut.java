@@ -1010,4 +1010,24 @@ public interface I_M_InOut
 	  * Weight of a product
 	  */
 	public BigDecimal getWeight();
+
+	
+	
+	/** Column name A_CreateAsset */
+    public static final String COLUMNNAME_A_CreateAsset = "A_CreateAsset";
+
+	/** Set Create Asset	  */
+	public void setA_CreateAsset (boolean A_CreateAsset);
+
+	/** Get Create Asset	  */
+	public boolean isA_CreateAsset();
+
+    /** Column name IsTrackAsAsset */
+    public static final String COLUMNNAME_IsTrackAsAsset = "IsTrackAsAsset";
+
+	/** Set Track As Asset	  */
+	public void setIsTrackAsAsset (boolean IsTrackAsAsset);
+
+	/** Get Track As Asset	  */
+	public boolean isTrackAsAsset();
 }

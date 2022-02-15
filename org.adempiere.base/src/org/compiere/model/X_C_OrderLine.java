@@ -1326,4 +1326,124 @@ public class X_C_OrderLine extends PO implements I_C_OrderLine, I_Persistent
 			 return 0;
 		return ii.intValue();
 	}
+	
+	
+	/** Set Track As Asset.
+	@param IsTrackAsAsset Track As Asset	  */
+	public void setIsTrackAsAsset (boolean IsTrackAsAsset)
+	{
+		set_Value (COLUMNNAME_IsTrackAsAsset, Boolean.valueOf(IsTrackAsAsset));
+	}
+
+	/** Get Track As Asset.
+		@return Track As Asset	  */
+	public boolean isTrackAsAsset () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsTrackAsAsset);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
+	public org.compiere.model.I_A_Asset_Group getA_Asset_Group() throws RuntimeException
+    {
+		return (org.compiere.model.I_A_Asset_Group)MTable.get(getCtx(), org.compiere.model.I_A_Asset_Group.Table_Name)
+			.getPO(getA_Asset_Group_ID(), get_TrxName());	}
+
+	/** Set Asset Group.
+		@param A_Asset_Group_ID 
+		Group of Assets
+	  */
+	public void setA_Asset_Group_ID (int A_Asset_Group_ID)
+	{
+		if (A_Asset_Group_ID < 1) 
+			set_Value (COLUMNNAME_A_Asset_Group_ID, null);
+		else 
+			set_Value (COLUMNNAME_A_Asset_Group_ID, Integer.valueOf(A_Asset_Group_ID));
+	}
+
+	/** Get Asset Group.
+		@return Group of Assets
+	  */
+	public int getA_Asset_Group_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_A_Asset_Group_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_A_Asset getA_Asset() throws RuntimeException
+    {
+		return (org.compiere.model.I_A_Asset)MTable.get(getCtx(), org.compiere.model.I_A_Asset.Table_Name)
+			.getPO(getA_Asset_ID(), get_TrxName());	}
+
+	/** Set Asset.
+		@param A_Asset_ID 
+		Asset used internally or by customers
+	  */
+	public void setA_Asset_ID (int A_Asset_ID)
+	{
+		if (A_Asset_ID < 1) 
+			set_Value (COLUMNNAME_A_Asset_ID, null);
+		else 
+			set_Value (COLUMNNAME_A_Asset_ID, Integer.valueOf(A_Asset_ID));
+	}
+
+	/** Get Asset.
+		@return Asset used internally or by customers
+	  */
+	public int getA_Asset_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_A_Asset_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** A_CapvsExp AD_Reference_ID=53277 */
+	public static final int A_CAPVSEXP_AD_Reference_ID=53277;
+	/** Capital = Cap */
+	public static final String A_CAPVSEXP_Capital = "Cap";
+	/** Expense = Exp */
+	public static final String A_CAPVSEXP_Expense = "Exp";
+	/** Set Capital/Expense.
+		@param A_CapvsExp Capital/Expense	  */
+	public void setA_CapvsExp (String A_CapvsExp)
+	{
+
+		set_Value (COLUMNNAME_A_CapvsExp, A_CapvsExp);
+	}
+
+	/** Get Capital/Expense.
+		@return Capital/Expense	  */
+	public String getA_CapvsExp () 
+	{
+		return (String)get_Value(COLUMNNAME_A_CapvsExp);
+	}
+
+	/** Set Create Asset.
+		@param A_CreateAsset Create Asset	  */
+	public void setA_CreateAsset (boolean A_CreateAsset)
+	{
+		set_Value (COLUMNNAME_A_CreateAsset, Boolean.valueOf(A_CreateAsset));
+	}
+
+	/** Get Create Asset.
+		@return Create Asset	  */
+	public boolean isA_CreateAsset () 
+	{
+		Object oo = get_Value(COLUMNNAME_A_CreateAsset);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
 }

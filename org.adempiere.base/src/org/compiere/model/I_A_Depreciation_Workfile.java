@@ -22,7 +22,7 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Interface for A_Depreciation_Workfile
  *  @author iDempiere (generated) 
- *  @version Release 9
+ *  @version Release 7.1
  */
 public interface I_A_Depreciation_Workfile 
 {
@@ -534,4 +534,14 @@ public interface I_A_Depreciation_Workfile
 
 	/** Get Use Life - Years (fiscal)	  */
 	public int getUseLifeYears_F();
+	
+	
+	/** Column name A_Period_Start */
+    public static final String COLUMNNAME_A_Period_Start = "A_Period_Start";
+
+	/** Set A_Period_Start	  */
+	public void setA_Period_Start (int A_Period_Start);
+
+	/** Get A_Period_Start	  */
+	public int getA_Period_Start();
 }

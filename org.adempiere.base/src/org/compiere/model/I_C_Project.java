@@ -657,4 +657,13 @@ s planned margin amount
 	  * Search key for the record in the format required - must be unique
 	  */
 	public String getValue();
+	
+	/** Column name IsCapitalized */
+    public static final String COLUMNNAME_IsCapitalized = "IsCapitalized";
+
+	/** Set Converted to Asset ?	  */
+	public void setIsCapitalized (boolean IsCapitalized);
+
+	/** Get Converted to Asset ?	  */
+	public boolean isCapitalized();
 }

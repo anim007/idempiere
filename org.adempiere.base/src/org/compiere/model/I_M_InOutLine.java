@@ -542,4 +542,52 @@ public interface I_M_InOutLine
 	public int getUser2_ID();
 
 	public org.compiere.model.I_C_ElementValue getUser2() throws RuntimeException;
+	
+	
+	/** Column name A_Asset_Group_ID */
+    public static final String COLUMNNAME_A_Asset_Group_ID = "A_Asset_Group_ID";
+
+	/** Set Asset Group.
+	  * Group of Assets
+	  */
+	public void setA_Asset_Group_ID (int A_Asset_Group_ID);
+
+	/** Get Asset Group.
+	  * Group of Assets
+	  */
+	public int getA_Asset_Group_ID();
+
+	public org.compiere.model.I_A_Asset_Group getA_Asset_Group() throws RuntimeException;
+
+    /** Column name A_Asset_ID */
+    public static final String COLUMNNAME_A_Asset_ID = "A_Asset_ID";
+
+	/** Set Asset.
+	  * Asset used internally or by customers
+	  */
+	public void setA_Asset_ID (int A_Asset_ID);
+
+	/** Get Asset.
+	  * Asset used internally or by customers
+	  */
+	public int getA_Asset_ID();
+
+	public org.compiere.model.I_A_Asset getA_Asset() throws RuntimeException;
+
+    /** Column name A_CreateAsset */
+    public static final String COLUMNNAME_A_CreateAsset = "A_CreateAsset";
+
+	/** Set Create Asset	  */
+	public void setA_CreateAsset (boolean A_CreateAsset);
+
+	/** Get Create Asset	  */
+	public boolean isA_CreateAsset();
+    /** Column name IsTrackAsAsset */
+    public static final String COLUMNNAME_IsTrackAsAsset = "IsTrackAsAsset";
+
+	/** Set Track As Asset	  */
+	public void setIsTrackAsAsset (boolean IsTrackAsAsset);
+
+	/** Get Track As Asset	  */
+	public boolean isTrackAsAsset();
 }

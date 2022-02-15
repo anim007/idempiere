@@ -21,12 +21,12 @@ import java.sql.Timestamp;
 import java.util.logging.Level;
 
 import org.compiere.model.MAssetAddition;
-import org.compiere.model.MProduct;
-import org.compiere.model.MProductCategory;
+import org.compiere.model.MAssetGroup;
 import org.compiere.model.MProject;
 import org.compiere.process.DocAction;
 import org.compiere.process.ProcessInfoParameter;
 import org.compiere.process.SvrProcess;
+import org.compiere.util.Msg;
 
  
 /**
@@ -35,19 +35,22 @@ import org.compiere.process.SvrProcess;
  *
  *	@author zuhri utama
  */
-@org.adempiere.base.annotation.Process
 public class ProjectCreateAsset extends SvrProcess
 {
 	/**	Project 			*/
 	private int 		m_C_Project_ID = 0;
 	
-	/**	Product 			*/
-	private int 		m_Product_ID = 0;
-		
+	/**	Asset Group			*/
+	private int 		m_AssetGroup_ID = 0;
+	
+	/**	Asset			*/
+	//private int 		m_Asset_ID = 0;
+	
+	
 	/** DateTrx for create asset	*/
 	private Timestamp	m_DateTrx = null;
 	
-	private String message = "";
+	//private String message = "";
 	
 	/**
 	 *  Prepare - e.g., get Parameters.
@@ -60,15 +63,15 @@ public class ProjectCreateAsset extends SvrProcess
 			String name = para[i].getParameterName();
 			if (para[i].getParameter() == null)
 				;
-			else if (para[i].getParameterName().equalsIgnoreCase("C_Project_ID")) {
-				m_C_Project_ID = para[i].getParameterAsInt();
+		
+			else if (para[i].getParameterName().equalsIgnoreCase("A_Asset_Group_ID")) {
+				m_AssetGroup_ID = para[i].getParameterAsInt();
 			}
-			else if (para[i].getParameterName().equalsIgnoreCase("M_Product_ID")) {
-				m_Product_ID = para[i].getParameterAsInt();
+			/* @win temporary comment: currently we only allow addition from project. adjustment will be supported later
+			else if (para[i].getParameterName().equalsIgnoreCase("A_Asset_ID")) {
+				m_Asset_ID = para[i].getParameterAsInt();
 			}
-			else if (para[i].getParameterName().equalsIgnoreCase("UseLifeYears")) {
-				;
-			}
+			*/
 			else if (para[i].getParameterName().equalsIgnoreCase("DateTrx")) {
 				m_DateTrx = (Timestamp)para[i].getParameter();
 			}
@@ -86,33 +89,51 @@ public class ProjectCreateAsset extends SvrProcess
 	 */
 	protected String doIt() throws Exception
 	{
-		if (m_C_Project_ID == 0 || m_Product_ID == 0) {
-			return "Missing Mandatory Field Value (Project / Product)";
+		m_C_Project_ID = getRecord_ID();
+		
+		/* @win temporary comment: currently we only allow addition from project. adjustment will be supported later
+		MAsset asset = null;
+		
+		if (m_Asset_ID > 0) {
+			asset = new MAsset(getCtx(), m_Asset_ID, get_TrxName());
+			m_AssetGroup_ID = asset.getA_Asset_Group_ID();
 		}
+		*/
+		
+		if (m_C_Project_ID == 0 || m_AssetGroup_ID == 0)
+			return "Missing Mandatory Field Value (Project / Asset Group)";
 		
 		MProject project = new MProject (getCtx(), m_C_Project_ID, get_TrxName());
+		
+		if (!project.isProcessed())
+			return "Error: only closed project can be capitalize";
+		
+		if (project.get_ValueAsBoolean("IsCapitalized"))
+			return "Error: project has been capitalized";
+					
+					
 		if (log.isLoggable(Level.INFO)) log.info("doIt - " + project);
 		
-		MProduct product = new MProduct(getCtx(), m_Product_ID, get_TrxName());
-		MProductCategory pc = MProductCategory.get(getCtx(), product.getM_Product_Category_ID());
-		if (pc.getA_Asset_Group_ID() == 0) {
-			return "Product is not asset type";
-		}
 		
-		MAssetAddition assetAdd = MAssetAddition.createAsset(project, product);
-		assetAdd.setDateAcct(m_DateTrx);
-		assetAdd.setDateDoc(m_DateTrx);
-		assetAdd.setM_Product_ID(m_Product_ID);
+		MAssetGroup assetGroup = new MAssetGroup(getCtx(), m_AssetGroup_ID, get_TrxName());
+
+		MAssetAddition assetAdd = MAssetAddition.createAsset(project, assetGroup, true, m_DateTrx, m_DateTrx);
+		//assetAdd.saveEx();
 		
-		assetAdd.saveEx();
 		if (!assetAdd.processIt(DocAction.ACTION_Complete)) {
 			return "Error Process Asset Addition";
 		}
 		assetAdd.saveEx();
 		
-		message += ". @A_Asset_Addition_ID@ - " + assetAdd;
-
-		return "Asset Created " + message;
+		project.set_ValueOfColumn("IsCapitalized", true);;
+		project.saveEx();
+		
+		//message += ". @A_Asset_Addition_ID@ - " + assetAdd;
+		
+		String message = Msg.parseTranslation(getCtx(), "@GeneratedAssetAddition@ " + assetAdd.getDocumentNo());
+		addBufferLog(0, null, null, message, assetAdd.get_Table_ID(), assetAdd.getA_Asset_Addition_ID());
+		
+		return "";
 	}	//	doIt
 
 }	//	ProjectClose

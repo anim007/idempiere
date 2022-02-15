@@ -1037,4 +1037,25 @@ public class X_C_Project extends PO implements I_C_Project, I_Persistent
     {
         return new KeyNamePair(get_ID(), getValue());
     }
+    
+    /** Set Converted to Asset ?.
+		@param IsCapitalized Converted to Asset ?	  */
+	public void setIsCapitalized (boolean IsCapitalized)
+	{
+		set_Value (COLUMNNAME_IsCapitalized, Boolean.valueOf(IsCapitalized));
+	}
+	
+	/** Get Converted to Asset ?.
+		@return Converted to Asset ?	  */
+	public boolean isCapitalized () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsCapitalized);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
 }

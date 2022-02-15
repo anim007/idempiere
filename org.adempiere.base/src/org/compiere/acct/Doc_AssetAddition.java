@@ -3,6 +3,7 @@ package org.compiere.acct;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import org.compiere.model.I_C_Project;
 import org.compiere.model.I_C_Project_Acct;
@@ -105,14 +106,12 @@ public class Doc_AssetAddition extends Doc
 			return pAssetAcct;
 		}	
 		else if (MAssetAddition.A_SOURCETYPE_Invoice.equals(assetAdd.getA_SourceType())
-				&& assetAdd.getC_InvoiceLine().getC_Project_ID() > 0)
+				&& assetAdd.getC_InvoiceLine_ID() > 0)
 		{
-			I_C_Project prj = assetAdd.getC_InvoiceLine().getC_Project();
-			return getProjectAcct(prj, as);
-		}
-		else
-		{
-			pAssetAcct = getP_Expense_Acct(assetAdd.getM_Product_ID(), as);
+			if (assetAdd.getC_InvoiceLine().getM_Product_ID() > 0) 
+				pAssetAcct = getA_AssetClearing_Acct(assetAdd.getC_InvoiceLine().getM_Product_ID(), as);
+			else if (assetAdd.getC_InvoiceLine().getC_Charge_ID() > 0)
+				pAssetAcct = MCharge.getAccount(assetAdd.getC_InvoiceLine().getC_Charge_ID(), as);
 		}
 		//
 		return pAssetAcct;
@@ -164,6 +163,7 @@ public class Doc_AssetAddition extends Doc
 			return 0;
 		}
 	}
+	
 	public int getInvoiceProject_ID()
 	{
 		MAssetAddition assetAdd = getAssetAddition();
@@ -176,5 +176,18 @@ public class Doc_AssetAddition extends Doc
 		{
 			return 0;
 		}
-	}		
+	}
+	
+	public MAccount getA_AssetClearing_Acct(int M_Product_ID, MAcctSchema as) 
+	{
+		String sql = "SELECT A_Asset_Clearing_Acct FROM FA_DefaultAccount WHERE C_AcctSchema_ID=?";
+		int accountID = DB.getSQLValue(getTrxName(), sql, as.get_ID());
+		if (accountID > 1)
+			return MAccount.get(getCtx(), accountID);
+		else {
+        	p_Error = "Posting aborted... Asset Clearing Account Not Set";
+        	log.log(Level.WARNING, p_Error);
+        	return null;
+		}
+	}
 }

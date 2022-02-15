@@ -912,4 +912,39 @@ public class X_A_Asset_Group_Acct extends PO implements I_A_Asset_Group_Acct, I_
 			 return 0;
 		return ii.intValue();
 	}
+	
+	@Override
+	public void setA_Asset_Clearing_Acct(int A_Asset_Clearing_Acct) {
+		set_Value (COLUMNNAME_A_Asset_Clearing_Acct, Integer.valueOf(A_Asset_Clearing_Acct));
+	}
+
+	@Override
+	public int getA_Asset_Clearing_Acct() {
+		Integer ii = (Integer)get_Value(COLUMNNAME_A_Asset_Clearing_Acct);
+		if (ii == null)
+			return 0;
+		return ii.intValue();
+	}
+
+	@Override
+	public I_C_ValidCombination getA_Asset_Clearing_A() throws RuntimeException {
+		return (I_C_ValidCombination)MTable.get(getCtx(), I_C_ValidCombination.Table_Name)
+				.getPO(getA_Asset_Clearing_Acct(), get_TrxName());	}
+
+	/** Set Asset Salvage Value.
+	@param A_Salvage_Value Asset Salvage Value	  */
+	public void setA_Salvage_Value (BigDecimal A_Salvage_Value)
+	{
+		set_Value (COLUMNNAME_A_Salvage_Value, A_Salvage_Value);
+	}
+
+	/** Get Asset Salvage Value.
+	@return Asset Salvage Value	  */
+	public BigDecimal getA_Salvage_Value () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_A_Salvage_Value);
+		if (bd == null)
+			return Env.ZERO;
+		return bd;
+	}
 }

@@ -1841,4 +1841,48 @@ public class X_M_InOut extends PO implements I_M_InOut, I_Persistent
 			 return Env.ZERO;
 		return bd;
 	}
+	
+
+	
+	/** Set Track As Asset.
+		@param IsTrackAsAsset Track As Asset	  */
+	public void setIsTrackAsAsset (boolean IsTrackAsAsset)
+	{
+		set_Value (COLUMNNAME_IsTrackAsAsset, Boolean.valueOf(IsTrackAsAsset));
+	}
+
+	/** Get Track As Asset.
+		@return Track As Asset	  */
+	public boolean isTrackAsAsset () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsTrackAsAsset);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
+	/** Set Create Asset.
+		@param A_CreateAsset Create Asset	  */
+	public void setA_CreateAsset (boolean A_CreateAsset)
+	{
+		set_Value (COLUMNNAME_A_CreateAsset, Boolean.valueOf(A_CreateAsset));
+	}
+
+	/** Get Create Asset.
+		@return Create Asset	  */
+	public boolean isA_CreateAsset () 
+	{
+		Object oo = get_Value(COLUMNNAME_A_CreateAsset);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
 }

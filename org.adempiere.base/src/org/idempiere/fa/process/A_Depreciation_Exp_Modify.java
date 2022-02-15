@@ -16,7 +16,6 @@ import org.compiere.process.SvrProcess;
  * @author Anca Bradau www.arhipac.ro
  *
  */
-@org.adempiere.base.annotation.Process
 public class A_Depreciation_Exp_Modify extends SvrProcess
 {
 	private int p_A_Depreciation_Exp_ID = -1; 
@@ -72,7 +71,7 @@ public class A_Depreciation_Exp_Modify extends SvrProcess
 			throw new AdempiereException("@NotFound@ @A_Depreciation_Exp_ID@ = "+p_A_Depreciation_Exp_ID);
 		}
 		//
-		MDepreciationEntry.deleteFacts(exp);
+//		MDepreciationEntry.deleteFacts(exp);
 		exp.setDR_Account_ID(p_DR_Account_ID);
 		exp.setCR_Account_ID(p_CR_Account_ID);
 		exp.saveEx();

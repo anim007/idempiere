@@ -22,7 +22,7 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Interface for A_Asset_Transfer
  *  @author iDempiere (generated) 
- *  @version Release 9
+ *  @version Release 7.1
  */
 public interface I_A_Asset_Transfer 
 {
@@ -51,6 +51,17 @@ public interface I_A_Asset_Transfer
 	public int getA_Accumdepreciation_Acct();
 
 	public I_C_ValidCombination getA_Accumdepreciation_A() throws RuntimeException;
+
+    /** Column name A_Accumdepreciation_Acct_New */
+    public static final String COLUMNNAME_A_Accumdepreciation_Acct_New = "A_Accumdepreciation_Acct_New";
+
+	/** Set New Accum Depreciation Acct	  */
+	public void setA_Accumdepreciation_Acct_New (int A_Accumdepreciation_Acct_New);
+
+	/** Get New Accum Depreciation Acct	  */
+	public int getA_Accumdepreciation_Acct_New();
+
+	public I_C_ValidCombination getA_Accumdepreciation_Acct_() throws RuntimeException;
 
     /** Column name A_Accumdepreciation_Acct_Str */
     public static final String COLUMNNAME_A_Accumdepreciation_Acct_Str = "A_Accumdepreciation_Acct_Str";
@@ -100,6 +111,17 @@ public interface I_A_Asset_Transfer
 
 	/** Get A_Asset_Acct_ID	  */
 	public int getA_Asset_Acct_ID();
+
+    /** Column name A_Asset_Acct_New */
+    public static final String COLUMNNAME_A_Asset_Acct_New = "A_Asset_Acct_New";
+
+	/** Set New Asset Cost Acct	  */
+	public void setA_Asset_Acct_New (int A_Asset_Acct_New);
+
+	/** Get New Asset Cost Acct	  */
+	public int getA_Asset_Acct_New();
+
+	public I_C_ValidCombination getA_Asset_Acct_() throws RuntimeException;
 
     /** Column name A_Asset_Acct_Str */
     public static final String COLUMNNAME_A_Asset_Acct_Str = "A_Asset_Acct_Str";
@@ -182,6 +204,17 @@ public interface I_A_Asset_Transfer
 
 	public I_C_ValidCombination getA_Depreciation_A() throws RuntimeException;
 
+    /** Column name A_Depreciation_Acct_New */
+    public static final String COLUMNNAME_A_Depreciation_Acct_New = "A_Depreciation_Acct_New";
+
+	/** Set New Depreciation Exp Acct	  */
+	public void setA_Depreciation_Acct_New (int A_Depreciation_Acct_New);
+
+	/** Get New Depreciation Exp Acct	  */
+	public int getA_Depreciation_Acct_New();
+
+	public I_C_ValidCombination getA_Depreciation_Acct_() throws RuntimeException;
+
     /** Column name A_Depreciation_Acct_Str */
     public static final String COLUMNNAME_A_Depreciation_Acct_Str = "A_Depreciation_Acct_Str";
 
@@ -222,6 +255,17 @@ public interface I_A_Asset_Transfer
 
 	public I_C_ValidCombination getA_Disposal_Loss_A() throws RuntimeException;
 
+    /** Column name A_Disposal_Loss_New */
+    public static final String COLUMNNAME_A_Disposal_Loss_New = "A_Disposal_Loss_New";
+
+	/** Set New Disposal Loss	  */
+	public void setA_Disposal_Loss_New (int A_Disposal_Loss_New);
+
+	/** Get New Disposal Loss	  */
+	public int getA_Disposal_Loss_New();
+
+	public I_C_ValidCombination getA_Disposal_Loss_() throws RuntimeException;
+
     /** Column name A_Disposal_Loss_New_Acct */
     public static final String COLUMNNAME_A_Disposal_Loss_New_Acct = "A_Disposal_Loss_New_Acct";
 
@@ -261,6 +305,17 @@ public interface I_A_Asset_Transfer
 	public int getA_Disposal_Revenue_Acct();
 
 	public I_C_ValidCombination getA_Disposal_Revenue_A() throws RuntimeException;
+
+    /** Column name A_Disposal_Revenue_New */
+    public static final String COLUMNNAME_A_Disposal_Revenue_New = "A_Disposal_Revenue_New";
+
+	/** Set New Disposal Revenue	  */
+	public void setA_Disposal_Revenue_New (int A_Disposal_Revenue_New);
+
+	/** Get New Disposal Revenue	  */
+	public int getA_Disposal_Revenue_New();
+
+	public I_C_ValidCombination getA_Disposal_Revenue_() throws RuntimeException;
 
     /** Column name A_Disposal_Revenue_New_Acct */
     public static final String COLUMNNAME_A_Disposal_Revenue_New_Acct = "A_Disposal_Revenue_New_Acct";
@@ -540,4 +595,31 @@ public interface I_A_Asset_Transfer
 	  * User who updated this records
 	  */
 	public int getUpdatedBy();
+	
+	
+	/** Column name A_Asset_Group_ID */
+    public static final String COLUMNNAME_A_Asset_Group_ID = "A_Asset_Group_ID";
+
+	/** Set Asset Group.
+	  * Group of Assets
+	  */
+	public void setA_Asset_Group_ID (int A_Asset_Group_ID);
+
+	/** Get Asset Group.
+	  * Group of Assets
+	  */
+	public int getA_Asset_Group_ID();
+
+	public org.compiere.model.I_A_Asset_Group getA_Asset_Group() throws RuntimeException;
+	
+	/** Column name New_Asset_Group_ID */
+    public static final String COLUMNNAME_New_Asset_Group_ID = "New_Asset_Group_ID";
+
+	/** Set New Asset Group	  */
+	public void setNew_Asset_Group_ID (int New_Asset_Group_ID);
+
+	/** Get New Asset Group	  */
+	public int getNew_Asset_Group_ID();
+
+	public org.compiere.model.I_A_Asset_Group getNew_Asset_Group() throws RuntimeException;
 }

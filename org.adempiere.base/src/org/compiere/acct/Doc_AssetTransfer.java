@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.compiere.model.MAccount;
 import org.compiere.model.MAcctSchema;
+import org.compiere.model.MAssetGroupAcct;
 import org.compiere.model.MAssetTransfer;
 import org.compiere.model.MDepreciationWorkfile;
 import org.compiere.model.MDocType;
@@ -21,12 +22,17 @@ public class Doc_AssetTransfer extends Doc
 
 	public Doc_AssetTransfer (MAcctSchema as, ResultSet rs, String trxName)
 	{
-		super(as, MAssetTransfer.class, rs, MDocType.DOCBASETYPE_GLJournal, trxName);
+		super(as, MAssetTransfer.class, rs, MDocType.DOCBASETYPE_GLDocument, trxName);
 	}
 
 	
 	protected String loadDocumentDetails()
 	{
+		// Fix C_Period_ID
+//		MAssetTransfer assetTr = getAssetTransfer();
+//		assetTr.setC_Period_ID();
+//		assetTr.saveEx();
+		
 		return null;
 	}
 	
@@ -45,18 +51,22 @@ public class Doc_AssetTransfer extends Doc
 	{
 		MAssetTransfer assetTr = getAssetTransfer();
 		MDepreciationWorkfile wk = getAssetWorkfile();	
+	    //MDepreciationExp exp = getExpense();
 		
 		ArrayList<Fact> facts = new ArrayList<Fact>();
-		Fact fact = new Fact(this, as, assetTr.getPostingType());
+		Fact fact = new Fact(this, as, MDepreciationWorkfile.POSTINGTYPE_Actual);
 		facts.add(fact);
 		//
+		MAssetGroupAcct newAssetGroupAcct = MAssetGroupAcct.forA_Asset_Group_ID(getCtx(), assetTr.getNew_Asset_Group_ID(), MAssetGroupAcct.POSTINGTYPE_Actual);
+		MAssetGroupAcct oldAssetGroupAcct = MAssetGroupAcct.forA_Asset_Group_ID(getCtx(), assetTr.getA_Asset_Group_ID(), MAssetGroupAcct.POSTINGTYPE_Actual);
+		BigDecimal transferAmt = wk.getA_Asset_Cost().subtract(wk.getA_Accumulated_Depr());
 		// Change Asset Account
 		if (assetTr.getA_Asset_New_Acct() != assetTr.getA_Asset_Acct())
 		{
-			MAccount dr = MAccount.get(getCtx(), assetTr.getA_Asset_New_Acct());  
-			MAccount cr = MAccount.get(getCtx(), assetTr.getA_Asset_Acct());
+			MAccount dr = MAccount.get(getCtx(), newAssetGroupAcct.getA_Asset_Acct());  
+			MAccount cr = MAccount.get(getCtx(), oldAssetGroupAcct.getA_Asset_Acct());
 			FactUtil.createSimpleOperation(fact, null, dr, cr, as.getC_Currency_ID(),
-					wk.getA_Asset_Cost(), false);
+					transferAmt, false);
 		}
 		//
 		// Change Asset Accum. Depr. Account
@@ -66,19 +76,25 @@ public class Doc_AssetTransfer extends Doc
 			MAccount dr = MAccount.get(getCtx(), assetTr.getA_Accumdepreciation_Acct());
 			FactUtil.createSimpleOperation(fact, null, dr, cr, as.getC_Currency_ID(),
 					wk.getA_Accumulated_Depr(), false);
+			        //exp.getA_Accumulated_Depr(), false);
 		}
 		//
 		return facts;
 	}
+	/*private MDepreciationExp getExpense() {
+		
+		return MDepreciationExp.get(getCtx(), 1712112);
+	}*/
 
 	private MAssetTransfer getAssetTransfer()
 	{
 		return (MAssetTransfer)getPO();
 	}
+	
 	private MDepreciationWorkfile getAssetWorkfile()
 	{
 		MAssetTransfer assetTr = getAssetTransfer();
-		return MDepreciationWorkfile.get(getCtx(), assetTr.getA_Asset_ID(), assetTr.getPostingType(), getTrxName());
+		return MDepreciationWorkfile.get(getCtx(), assetTr.getA_Asset_ID(), MDepreciationWorkfile.POSTINGTYPE_Actual, getTrxName());
 	}
 	
 }

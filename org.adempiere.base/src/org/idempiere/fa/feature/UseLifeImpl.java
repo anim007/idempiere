@@ -181,28 +181,6 @@ public class UseLifeImpl
 	}
 	
 	/**
-	 *	@return asset class ID
-	 */
-	/* commented out by @win
-	public int getA_Asset_Class_ID()
-	{
-		if (m_obj instanceof UseLife)
-		{
-			return ((UseLife)m_obj).getA_Asset_Class_ID();
-		}
-		else
-		{
-			Object obj = m_obj.get_AttrValue("A_Asset_Class_ID");
-			if (obj != null && obj instanceof Number)
-			{
-				return ((Number)obj).intValue();
-			}
-		}
-		return 0;
-	}
-	*/ // end comment by @win
-	
-	/**
 	 * Copy UseLifeMonths, UseLifeMonths_F, UseLifeYears, UseLifeYears_F fields from "from" to "to"
 	 * @param	to	destination model
 	 * @param	from source model
@@ -235,24 +213,8 @@ public class UseLifeImpl
 		if (useLifeYears == 0) {
 			useLifeYears = (int)(useLifeMonths / 12);
 		}
-		/* commented out by @win
-		int A_Asset_Class_ID = getA_Asset_Class_ID();
-		if (A_Asset_Class_ID > 0 && (useLifeMonths == 0 || useLifeYears == 0)) {
-			if(saveError) log.saveError("Error", "@Invalid@ @UseLifeMonths@=" + useLifeMonths + ", @UseLifeYears@=" + useLifeYears);
-			return false;
-		}
-		*/ //commented out by @win
-		
 		setUseLifeMonths(useLifeMonths);
 		setUseLifeYears(useLifeYears);
-		
-		/* commented by @win
-		MAssetClass assetClass = MAssetClass.get(getCtx(), A_Asset_Class_ID);
-		if (assetClass != null && !assetClass.validate(this)) {
-			if (log.isLoggable(Level.FINE)) log.fine("Leaving [RETURN FALSE]");
-			return false;
-		}
-		*/ //end comment by @win
 		
 		if (log.isLoggable(Level.FINE)) log.fine("Leaving [RETURN TRUE]");
 		return true;
@@ -280,6 +242,7 @@ public class UseLifeImpl
 	public static Timestamp getDateAcct(Timestamp assetServiceDate, int A_Current_Period) {
 		if (assetServiceDate == null)
 			return null;
+		
 		return TimeUtil.addMonths(assetServiceDate, A_Current_Period);
 	}
 	
@@ -291,57 +254,39 @@ public class UseLifeImpl
 	public static class Callout extends org.compiere.model.CalloutEngine {
 		/**	*/
 		private String validate(Properties ctx, int WindowNo, GridTab mTab, GridField mField, Object value, Object oldValue) {
-			/* commented out by @win
-			Integer A_Asset_Class_ID = (Integer)mTab.getValue("A_Asset_Class_ID");
-			if (A_Asset_Class_ID == null || A_Asset_Class_ID == 0) {
-				return NO_ERROR;
-			}
-			*/ //end commented by @win
 			Timestamp AssetServiceDate = (Timestamp)mTab.getValue("AssetServiceDate");
 			if (AssetServiceDate == null) {
 				return NO_ERROR;
 			}
-			/* commented out by @win
-			MAssetClass assetClass = MAssetClass.get(ctx, A_Asset_Class_ID);
-			if (assetClass == null) {
-				return NO_ERROR;
-			}
-			*/ // end comment by @win
 			
 			Integer UseLifeMonths = (Integer)mTab.getValue("UseLifeMonths");
 			if (UseLifeMonths == null) {
 				UseLifeMonths = 0;
 			}
-			/* commented out by @win
-			String errmsg = assetClass.validate(false, UseLifeMonths, AssetServiceDate);
-			if(CLogMgt.isLevelFine()) if (log.isLoggable(Level.FINE)) log.fine("assetClass=" + assetClass + ", UseLifeMonths=" + UseLifeMonths + ", AssetServiceDate=" + AssetServiceDate + ", errmsg=" + errmsg);
-			return errmsg;
-			*/ // end comment by @win
+
 			return NO_ERROR; //added by @win
 		}
 		
 		/**	*/
 		public String assetServiceDate(Properties ctx, int WindowNo, GridTab mTab, GridField mField, Object value, Object oldValue) {
-			if (isCalloutActive() || value == null) {
+			if (isCalloutActive() || value == null) 
 				return NO_ERROR;
-			}
+			
 			return validate(ctx, WindowNo, mTab, mField, value, oldValue);
 		}
 		
 		/**	*/
 		public String useLife(Properties ctx, int WindowNo, GridTab mTab, GridField mField, Object value, Object oldValue) {
-			if (isCalloutActive()) {
+			if (isCalloutActive()) 
 				return NO_ERROR;
-			}
 			
 			String sufix = "";
 			int ivalue = 0;
 			int UseLifeYears = 0;
 			int UseLifeMonths = 0;
 			String errmsg = "";
-			if (value != null) {
+			if (value != null) 
 				ivalue = ((Integer)value).intValue();
-			}
 			
 			String columnName = mField.getColumnName().toUpperCase();
 			if (columnName.endsWith(FIELD_FiscalPostfix)) {
@@ -364,61 +309,29 @@ public class UseLifeImpl
 				mTab.setValue("UseLifeMonths" + sufix, Integer.valueOf(UseLifeMonths));
 			}
 			
-			if (errmsg.length() > 0) {
+			if (errmsg.length() > 0)
 				errmsg = Msg.parseTranslation(ctx, errmsg);
-			}
+			
 			return errmsg;
 		}
 		
 		/**
 		 */
 		public String assetGroup(Properties ctx, int WindowNo, GridTab mTab, GridField mField, Object value, Object oldValue) {
-			if (isCalloutActive()) {
+			if (isCalloutActive())
 				return NO_ERROR;
-			}
-			
+			/*
 			int A_Asset_Group_ID = -1;
-			if (value != null && value instanceof Number) {
+			
+			if (value != null && value instanceof Number)
 				A_Asset_Group_ID = ((Number)value).intValue();
-			}
+			
 			MAssetGroup.updateAsset(SetGetUtil.wrap(mTab), A_Asset_Group_ID);
+			 
+			*/
 			return NO_ERROR;
 		}
 		
-		/**	*/
-		/* commented by @win
-		public String assetClass(Properties ctx, int WindowNo, GridTab mTab, GridField mField, Object value, Object oldValue) {
-			if (isCalloutActive()) {
-				return NO_ERROR;
-			}
-			
-			String errmsg = NO_ERROR;
-			int A_Asset_Class_ID = -1;
-			String columnName = mField.getColumnName();
-			if(CLogMgt.isLevelFine()) if (log.isLoggable(Level.FINE)) log.fine("Entering: columnName: " + columnName + ", value=" + value);
-			
-			if (value != null && value instanceof Number) {
-				A_Asset_Class_ID = ((Number)value).intValue();
-			}
-			if(CLogMgt.isLevelFine()) if (log.isLoggable(Level.FINE)) log.fine("A_Asset_Class_ID=" + A_Asset_Class_ID);
-			
-			if (A_Asset_Class_ID > 0) {
-				MAssetClass assetClass = MAssetClass.get(ctx, A_Asset_Class_ID);
-				Integer UseLifeMonths = (Integer)mTab.getValue("UseLifeMonths_F");
-				Timestamp AssetServiceDate = (Timestamp)mTab.getValue("AssetServiceDate");
-				if (UseLifeMonths == null || UseLifeMonths == 0) {
-					UseLifeMonths = assetClass.getA_Life_Period_Min(AssetServiceDate);
-					mTab.setValue("UseLifeMonths", UseLifeMonths);
-				}
-				else {
-					errmsg = assetClass.validate(false, UseLifeMonths, AssetServiceDate);
-				}
-				if(CLogMgt.isLevelFine()) if (log.isLoggable(Level.FINE)) log.fine("assetClass=" + assetClass + ", UseLifeMonths=" + UseLifeMonths + ", AssetServiceDate=" + AssetServiceDate + ", errmsg=" + errmsg);
-			}
-			
-			if(CLogMgt.isLevelFine()) if (log.isLoggable(Level.FINE)) log.fine("Leaving: errmsg=" + errmsg);
-			return errmsg;
-		}
-		*/ // end commented by @win
+
 	} //	class Callout
  }

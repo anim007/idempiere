@@ -22,7 +22,7 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Interface for A_Asset_Addition
  *  @author iDempiere (generated) 
- *  @version Release 9
+ *  @version Release 5.1
  */
 public interface I_A_Asset_Addition 
 {
@@ -41,6 +41,24 @@ public interface I_A_Asset_Addition
 
     /** Load Meta Data */
 
+    /** Column name A_Accumulated_Depr */
+    public static final String COLUMNNAME_A_Accumulated_Depr = "A_Accumulated_Depr";
+
+	/** Set Accumulated Depreciation	  */
+	public void setA_Accumulated_Depr (BigDecimal A_Accumulated_Depr);
+
+	/** Get Accumulated Depreciation	  */
+	public BigDecimal getA_Accumulated_Depr();
+
+    /** Column name A_Accumulated_Depr_F */
+    public static final String COLUMNNAME_A_Accumulated_Depr_F = "A_Accumulated_Depr_F";
+
+	/** Set Accumulated Depreciation (fiscal)	  */
+	public void setA_Accumulated_Depr_F (BigDecimal A_Accumulated_Depr_F);
+
+	/** Get Accumulated Depreciation (fiscal)	  */
+	public BigDecimal getA_Accumulated_Depr_F();
+
     /** Column name A_Asset_Addition_ID */
     public static final String COLUMNNAME_A_Asset_Addition_ID = "A_Asset_Addition_ID";
 
@@ -58,6 +76,21 @@ public interface I_A_Asset_Addition
 
 	/** Get A_Asset_Addition_UU	  */
 	public String getA_Asset_Addition_UU();
+
+    /** Column name A_Asset_Group_ID */
+    public static final String COLUMNNAME_A_Asset_Group_ID = "A_Asset_Group_ID";
+
+	/** Set Asset Group.
+	  * Group of Assets
+	  */
+	public void setA_Asset_Group_ID (int A_Asset_Group_ID);
+
+	/** Get Asset Group.
+	  * Group of Assets
+	  */
+	public int getA_Asset_Group_ID();
+
+	public org.compiere.model.I_A_Asset_Group getA_Asset_Group() throws RuntimeException;
 
     /** Column name A_Asset_ID */
     public static final String COLUMNNAME_A_Asset_ID = "A_Asset_ID";
@@ -131,6 +164,33 @@ public interface I_A_Asset_Addition
 	/** Get Life periods (min)	  */
 	public int getA_Life_Period_Min();
 
+    /** Column name A_NewAsset_Name */
+    public static final String COLUMNNAME_A_NewAsset_Name = "A_NewAsset_Name";
+
+	/** Set New Asset Name	  */
+	public void setA_NewAsset_Name (String A_NewAsset_Name);
+
+	/** Get New Asset Name	  */
+	public String getA_NewAsset_Name();
+
+    /** Column name A_NewAsset_Value */
+    public static final String COLUMNNAME_A_NewAsset_Value = "A_NewAsset_Value";
+
+	/** Set New Asset Value	  */
+	public void setA_NewAsset_Value (String A_NewAsset_Value);
+
+	/** Get New Asset Value	  */
+	public String getA_NewAsset_Value();
+
+    /** Column name A_Period_Start */
+    public static final String COLUMNNAME_A_Period_Start = "A_Period_Start";
+
+	/** Set Period Start Depreciation	  */
+	public void setA_Period_Start (int A_Period_Start);
+
+	/** Get Period Start Depreciation	  */
+	public int getA_Period_Start();
+
     /** Column name A_QTY_Current */
     public static final String COLUMNNAME_A_QTY_Current = "A_QTY_Current";
 
@@ -179,12 +239,12 @@ public interface I_A_Asset_Addition
     /** Column name AssetValueAmt */
     public static final String COLUMNNAME_AssetValueAmt = "AssetValueAmt";
 
-	/** Set Asset value.
+	/** Set Asset Value.
 	  * Book Value of the asset
 	  */
 	public void setAssetValueAmt (BigDecimal AssetValueAmt);
 
-	/** Get Asset value.
+	/** Get Asset Value.
 	  * Book Value of the asset
 	  */
 	public BigDecimal getAssetValueAmt();
@@ -349,6 +409,28 @@ public interface I_A_Asset_Addition
 	  */
 	public Timestamp getDateDoc();
 
+    /** Column name DeltaUseLifeYears */
+    public static final String COLUMNNAME_DeltaUseLifeYears = "DeltaUseLifeYears";
+
+	/** Set Delta Use Life Years	  */
+	public void setDeltaUseLifeYears (int DeltaUseLifeYears);
+
+	/** Get Delta Use Life Years	  */
+	public int getDeltaUseLifeYears();
+
+    /** Column name DeltaUseLifeYears_F */
+    public static final String COLUMNNAME_DeltaUseLifeYears_F = "DeltaUseLifeYears_F";
+
+	/** Set Delta Use Life Years (fiscal).
+	  * Delta Use Life Years (fiscal)
+	  */
+	public void setDeltaUseLifeYears_F (int DeltaUseLifeYears_F);
+
+	/** Get Delta Use Life Years (fiscal).
+	  * Delta Use Life Years (fiscal)
+	  */
+	public int getDeltaUseLifeYears_F();
+
     /** Column name Description */
     public static final String COLUMNNAME_Description = "Description";
 
@@ -439,6 +521,24 @@ public interface I_A_Asset_Addition
 	  * The record is active in the system
 	  */
 	public boolean isActive();
+
+    /** Column name IsAdjustAccmDepr */
+    public static final String COLUMNNAME_IsAdjustAccmDepr = "IsAdjustAccmDepr";
+
+	/** Set Adjust Accm Depreciation ?	  */
+	public void setIsAdjustAccmDepr (boolean IsAdjustAccmDepr);
+
+	/** Get Adjust Accm Depreciation ?	  */
+	public boolean isAdjustAccmDepr();
+
+    /** Column name IsAdjustUseLife */
+    public static final String COLUMNNAME_IsAdjustUseLife = "IsAdjustUseLife";
+
+	/** Set Adjust Use Life (Year) ?	  */
+	public void setIsAdjustUseLife (boolean IsAdjustUseLife);
+
+	/** Get Adjust Use Life (Year) ?	  */
+	public boolean isAdjustUseLife();
 
     /** Column name IsApproved */
     public static final String COLUMNNAME_IsApproved = "IsApproved";
@@ -617,4 +717,17 @@ public interface I_A_Asset_Addition
 	  * User who updated this records
 	  */
 	public int getUpdatedBy();
+
+    /** Column name UseLifeYears */
+    public static final String COLUMNNAME_UseLifeYears = "UseLifeYears";
+
+	/** Set Usable Life - Years.
+	  * Years of the usable life of the asset
+	  */
+	public void setUseLifeYears (int UseLifeYears);
+
+	/** Get Usable Life - Years.
+	  * Years of the usable life of the asset
+	  */
+	public int getUseLifeYears();
 }

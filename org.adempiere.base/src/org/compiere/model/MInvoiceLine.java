@@ -1370,4 +1370,15 @@ public class MInvoiceLine extends X_C_InvoiceLine
 		this.m_parent = null;
 	}
 
+	
+	
+	public MMatchInv[] getMatchInvoice() {
+
+		List<MMatchInv> list = new Query(getCtx(), I_M_MatchInv.Table_Name, 
+				I_M_MatchInv.COLUMNNAME_C_InvoiceLine_ID +"=? AND Reversal_ID IS NULL", get_TrxName())
+				.setParameters(get_ID())
+				.list();
+		return list.toArray(new MMatchInv[list.size()]);
+
+	}
 }	//	MInvoiceLine
