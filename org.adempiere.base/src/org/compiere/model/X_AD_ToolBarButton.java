@@ -486,4 +486,31 @@ public class X_AD_ToolBarButton extends PO implements I_AD_ToolBarButton, I_Pers
 			 return 0;
 		return ii.intValue();
 	}
+	
+	
+	/**
+	 * Modified by ANIM
+	 * */
+	/** Set Printed.
+		@param IsPrinted 
+	  */
+	public void setIsPrinted (boolean IsPrinted)
+	{
+		set_ValueNoCheck (COLUMNNAME_IsPrinted, Boolean.valueOf(IsPrinted));
+	}
+	
+	/** Get Printed.
+		@return This is printed
+	  */
+	public boolean isPrinted () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsPrinted);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
 }

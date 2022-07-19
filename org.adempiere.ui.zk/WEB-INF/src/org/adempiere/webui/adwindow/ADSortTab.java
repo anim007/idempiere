@@ -1092,5 +1092,16 @@ public class ADSortTab extends Panel implements IADTabpanel
 	{
 
 	}
+	
+	@Override
+	public boolean isEnablePrintButton()
+	{
+		return false;
+	}
+
+	@Override
+	public List<org.zkoss.zul.Button> getToolbarPrintButtons() {
+		return new ArrayList<org.zkoss.zul.Button>();
+	}
 
 }	//ADSortTab

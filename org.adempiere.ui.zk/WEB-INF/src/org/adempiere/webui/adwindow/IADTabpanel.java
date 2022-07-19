@@ -218,6 +218,11 @@ public interface IADTabpanel extends Component, Evaluatee {
 	  *  @return List of toolbar buttons
 	 */
 	public List<Button> getToolbarButtons();
+	
+	/**
+	  *  @return List of toolbar buttons
+	 */
+	public List<Button> getToolbarPrintButtons();
 
 	/**
 	 * @return customization enabled/disabled for tab
@@ -245,5 +250,14 @@ public interface IADTabpanel extends Component, Evaluatee {
 	 * @param toolbar - {@link Toolbar}
 	 */
 	public void updateDetailToolbar(Toolbar toolbar);
+	
+	
+	/**
+	 * @return process Button Enabled/Disabled
+	 */
+	default public boolean isEnablePrintButton() {
+		boolean isNewRow = getGridTab().getRowCount() == 0 || getGridTab().isNew();
+		return getToolbarPrintButtons().size() > 0 && !isNewRow;
+	}
 
 }

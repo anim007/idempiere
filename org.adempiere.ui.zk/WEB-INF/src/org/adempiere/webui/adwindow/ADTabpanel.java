@@ -75,6 +75,7 @@ import org.compiere.model.GridWindow;
 import org.compiere.model.I_AD_Preference;
 import org.compiere.model.MColumn;
 import org.compiere.model.MPreference;
+import org.compiere.model.MProcess;
 import org.compiere.model.MRole;
 import org.compiere.model.MStyle;
 import org.compiere.model.MSysConfig;
@@ -90,6 +91,7 @@ import org.compiere.model.X_AD_FieldGroup;
 import org.compiere.model.X_AD_ToolBarButton;
 import org.compiere.util.CCache;
 import org.compiere.util.CLogger;
+import org.compiere.util.DB;
 import org.compiere.util.DefaultEvaluatee;
 import org.compiere.util.DisplayType;
 import org.compiere.util.Env;
@@ -191,6 +193,8 @@ DataStatusListener, IADTabpanel, IdSpace, IFieldEditorContainer
     private ArrayList<WButtonEditor> toolbarButtonEditors = new ArrayList<WButtonEditor>();
     
     private ArrayList<ToolbarProcessButton> toolbarProcessButtons = new ArrayList<ToolbarProcessButton>();
+    
+    private ArrayList<ToolbarProcessButton> toolbarPrintButtons = new ArrayList<ToolbarProcessButton>();
 
     private boolean			  uiCreated = false;
 
@@ -952,13 +956,34 @@ DataStatusListener, IADTabpanel, IdSpace, IFieldEditorContainer
 	}
 
 	private void loadToolbarButtons() {
+		// @ANIM set tab process column to toolbar
+		int AD_PrintProcess_ID = DB.getSQLValueEx(null, "SELECT AD_Process_ID FROM AD_Tab WHERE AD_Tab_ID=?", new Object[] { gridTab.getAD_Tab_ID() });
+		if ( AD_PrintProcess_ID > 0 ) {
+			MProcess proc = new MProcess(Env.getCtx(), AD_PrintProcess_ID, null);
+			MToolBarButton newButton = new MToolBarButton(Env.getCtx(), 0, null);
+			newButton.setSeqNo(1);
+			newButton.setAD_Org_ID(0);
+			newButton.setAction(MToolBarButton.ACTION_Window);
+			newButton.setAD_Tab_ID(gridTab.getAD_Tab_ID());
+			newButton.setAD_Process_ID(AD_PrintProcess_ID);
+			newButton.setName(proc.getName());
+			newButton.setComponentName(proc.getName());
+			newButton.setIsPrinted(true);
+			ToolbarProcessButton toolbarProcessButton = new ToolbarProcessButton(newButton, this, windowPanel, windowNo);
+			toolbarPrintButtons.add(toolbarProcessButton);
+		}
+		
 		//get extra toolbar process buttons
         MToolBarButton[] mToolbarButtons = MToolBarButton.getProcessButtonOfTab(gridTab.getAD_Tab_ID(), null);
         for(MToolBarButton mToolbarButton : mToolbarButtons) {
         	Boolean access = MRole.getDefault().getProcessAccess(mToolbarButton.getAD_Process_ID());
         	if (access != null && access.booleanValue()) {
         		ToolbarProcessButton toolbarProcessButton = new ToolbarProcessButton(mToolbarButton, this, windowPanel, windowNo);
-        		toolbarProcessButtons.add(toolbarProcessButton);
+//        		toolbarProcessButtons.add(toolbarProcessButton);
+        		if (mToolbarButton.isPrinted()) 
+        			toolbarPrintButtons.add(toolbarProcessButton);
+        		else 
+        			toolbarProcessButtons.add(toolbarProcessButton);
         	}
         }
         
@@ -1205,6 +1230,10 @@ DataStatusListener, IADTabpanel, IdSpace, IFieldEditorContainer
         }
         
         for (ToolbarProcessButton btn : toolbarProcessButtons) {
+        	btn.dynamicDisplay();
+        }
+        
+        for (ToolbarProcessButton btn : toolbarPrintButtons) {
         	btn.dynamicDisplay();
         }
 
@@ -2273,6 +2302,19 @@ DataStatusListener, IADTabpanel, IdSpace, IFieldEditorContainer
 	public void editorTraverse(Callback<WEditor> editorTaverseCallback) {
 		editorTraverse(editorTaverseCallback, editors);
 		
+	}
+	
+	/**
+	 * @Hodianto - Get All Visible Printed Process
+	 */	
+	public List<Button> getToolbarPrintButtons() {
+		List<Button> buttonList = new ArrayList<Button>();
+		for(ToolbarProcessButton processButton : toolbarPrintButtons) {
+			if (processButton.getButton().isVisible()) {
+				buttonList.add(processButton.getButton());
+			}
+		}
+		return buttonList;
 	}
 
 	@Override

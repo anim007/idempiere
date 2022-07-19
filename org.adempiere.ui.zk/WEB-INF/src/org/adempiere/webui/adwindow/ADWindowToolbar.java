@@ -117,7 +117,7 @@ public class ADWindowToolbar extends FToolbar implements EventListener<Event>
 
     private ToolBarButton btnParentRecord, btnDetailRecord;
 
-    private ToolBarButton btnReport, btnArchive, btnPrint;
+    private ToolBarButton btnReport, btnArchive, btnPrint, btnPrintDD;
 
     private ToolBarButton btnZoomAcross, btnActiveWorkflows, btnRequests, btnProductInfo;
 
@@ -241,8 +241,12 @@ public class ADWindowToolbar extends FToolbar implements EventListener<Event>
         btnReport = createButton("Report", "Report", "Report");
         btnReport.setTooltiptext(btnReport.getTooltiptext()+ "    Alt+R");
         btnArchive = createButton("Archive", "Archive", "Archive");
-        btnPrint = createButton("Print", "Print", "Print");
-        btnPrint.setTooltiptext(btnPrint.getTooltiptext()+ "    Alt+P");
+//        @ANIM Button print drop down
+//        btnPrint = createButton("Print", "Print", "Print");
+//        btnPrint.setTooltiptext(btnPrint.getTooltiptext()+ "    Alt+P");
+        btnPrintDD = createButton("PrintDD", "Print", "Print");
+        btnPrintDD.setTooltiptext(btnPrintDD.getTooltiptext()+ "    Alt+P");
+        btnPrintDD.setDisabled(false);
         if (isPersonalLock) {
             btnLock = createButton("Lock", "Lock", "Lock"); // Elaine 2008/12/04
             btnLock.setDisabled(!isPersonalLock); // Elaine 2008/12/04
@@ -465,7 +469,8 @@ public class ADWindowToolbar extends FToolbar implements EventListener<Event>
 		altKeyMap.put(VK_F, btnFind);
 		altKeyMap.put(VK_Z, btnIgnore);
 		altKeyMap.put(VK_R, btnReport);		
-		altKeyMap.put(VK_P, btnPrint);
+//		altKeyMap.put(VK_P, btnPrint);
+		altKeyMap.put(VK_P, btnPrintDD);
 		altKeyMap.put(VK_O, btnProcess);
 		altKeyMap.put(VK_L, btnCustomize);
 	}
@@ -660,6 +665,11 @@ public class ADWindowToolbar extends FToolbar implements EventListener<Event>
     public void enablePrint(boolean enabled)
     {
     	this.btnPrint.setDisabled(!enabled);
+    }
+    
+    public void enablePrintDD(boolean enabled)
+    {
+    	this.btnPrintDD.setDisabled(!enabled);
     }
 
     public void enableReport(boolean enabled)

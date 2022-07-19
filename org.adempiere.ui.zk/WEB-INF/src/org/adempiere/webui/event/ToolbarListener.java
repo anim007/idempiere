@@ -181,4 +181,9 @@ public interface ToolbarListener
      * Select query from the user query list
      */
     public void onSearchQuery();
+    
+    /**
+     * Custom Print Button
+     */
+    public void onPrintDD();
 }

@@ -328,4 +328,16 @@ public interface I_AD_ToolBarButton
 	  * User who updated this records
 	  */
 	public int getUpdatedBy();
+	
+	/**
+	 * Modified by ANIM
+	 * */
+	/** Column name IsPrinted */
+    public static final String COLUMNNAME_IsPrinted = "IsPrinted";
+
+	/** Set Printed.  */
+	public void setIsPrinted (boolean IsPrinted);
+
+	/** Get Printed.  */
+	public boolean isPrinted();
 }

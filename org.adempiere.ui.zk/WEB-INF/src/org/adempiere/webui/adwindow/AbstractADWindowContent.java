@@ -1492,13 +1492,16 @@ public abstract class AbstractADWindowContent extends AbstractUIPart implements 
 			toolbar.lock(adTabbox.getSelectedGridTab().isLocked());
 		}
 
-		toolbar.enablePrint(adTabbox.getSelectedGridTab().isPrinted() && !adTabbox.getSelectedGridTab().isNew());
+		// @ANIM Customize print button to drop down
+//		toolbar.enablePrint(adTabbox.getSelectedGridTab().isPrinted() && !adTabbox.getSelectedGridTab().isNew());
+		IADTabpanel adtab = adTabbox.getSelectedTabpanel();
+		toolbar.enablePrintDD(adtab != null && adtab.isEnablePrintButton());
 
 		toolbar.enableQuickForm(adTabbox.getSelectedTabpanel().isEnableQuickFormButton() && !adTabbox.getSelectedGridTab().isReadOnly());
 
 		boolean isNewRow = adTabbox.getSelectedGridTab().getRowCount() == 0 || adTabbox.getSelectedGridTab().isNew();
-        
-		IADTabpanel adtab = adTabbox.getSelectedTabpanel();
+		
+//		IADTabpanel adtab = adTabbox.getSelectedTabpanel();
         toolbar.enableProcessButton(adtab != null && adtab.isEnableProcessButton());
         toolbar.enableCustomize(adtab.isEnableCustomizeButton());
         
@@ -1902,7 +1905,10 @@ public abstract class AbstractADWindowContent extends AbstractUIPart implements 
 			findWindow = tabFindWindowHashMap.get(adTabbox.getSelectedGridTab());*/
 		toolbar.refreshUserQuery(adTabbox.getSelectedGridTab().getAD_Tab_ID(), getCurrentFindWindow() != null ? getCurrentFindWindow().getAD_UserQuery_ID() : 0);
 
-        toolbar.enablePrint(adTabbox.getSelectedGridTab().isPrinted() && !isNewRow);
+//      @ANIM Customize print button to drop down
+//		toolbar.enablePrint(adTabbox.getSelectedGridTab().isPrinted() && !isNewRow);
+		IADTabpanel adtab = adTabbox.getSelectedTabpanel();
+		toolbar.enablePrintDD(adtab != null && adtab.isEnablePrintButton());
         toolbar.enableReport(!isNewRow);
         toolbar.enableExport(!isNewRow && !adTabbox.getSelectedGridTab().isSortTab());
         toolbar.enableFileImport(toolbar.isNewEnabled());
@@ -1910,7 +1916,7 @@ public abstract class AbstractADWindowContent extends AbstractUIPart implements 
         
         toolbar.enableTabNavigation(breadCrumb.hasParentLink(), adTabbox.getSelectedDetailADTabpanel() != null);
         
-        IADTabpanel adtab = adTabbox.getSelectedTabpanel();
+//        IADTabpanel adtab = adTabbox.getSelectedTabpanel();
         toolbar.enableProcessButton(adtab != null && adtab.isEnableProcessButton());
         toolbar.enableCustomize(adtab.isEnableCustomizeButton());
 
@@ -3905,5 +3911,17 @@ public abstract class AbstractADWindowContent extends AbstractUIPart implements 
 	public GridWindow getGridWindow() {
 		return gridWindow;
 	}
+	
+	// @ANIM Custom Button Print for Printout
+ 	public void onPrintDD() { 		
+ 		ProcessButtonPopup popup = new ProcessButtonPopup();
+		popup.setWidgetAttribute(AdempiereWebUI.WIDGET_INSTANCE_NAME, "processButtonPopup");
+		ADTabpanel adtab = (ADTabpanel) adTabbox.getSelectedTabpanel();
+		popup.render(adtab.getToolbarPrintButtons());
+		if (popup.getChildren().size() > 0) {
+			popup.setPage(this.getComponent().getPage());
+			popup.open(getToolbar().getToolbarItem("PrintDD"), "after_start");
+		}
+ 	}
 
 }
