@@ -611,7 +611,7 @@ public class ADWindowToolbar extends FToolbar implements EventListener<Event>
     public void enableSave(boolean enabled)
     {
         this.btnSave.setDisabled(!enabled);
-    	this.btnSaveAndCreate.setDisabled(!enabled);
+        this.btnSaveAndCreate.setDisabled(!(isNewEnabled() || isSaveEnable()));
     }
 
     public boolean isSaveEnable() {
@@ -645,6 +645,7 @@ public class ADWindowToolbar extends FToolbar implements EventListener<Event>
     public void enableNew(boolean enabled)
     {
         this.btnNew.setDisabled(!enabled);
+        this.btnSaveAndCreate.setDisabled(!(isNewEnabled() || isSaveEnable()));
     }
 
     public void enableCopy(boolean enabled)
