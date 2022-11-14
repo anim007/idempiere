@@ -17,15 +17,13 @@
 /** Generated Model - DO NOT CHANGE */
 package org.compiere.model;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.util.Properties;
-import org.compiere.util.Env;
 import org.compiere.util.KeyNamePair;
 
 /** Generated Model for PA_ReportLine
  *  @author iDempiere (generated) 
- *  @version Release 10 - $Id$ */
+ *  @version Release 9 - $Id$ */
 @org.adempiere.base.Model(table="PA_ReportLine")
 public class X_PA_ReportLine extends PO implements I_PA_ReportLine, I_Persistent 
 {
@@ -33,7 +31,7 @@ public class X_PA_ReportLine extends PO implements I_PA_ReportLine, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20221011L;
+	private static final long serialVersionUID = 20220116L;
 
     /** Standard Constructor */
     public X_PA_ReportLine (Properties ctx, int PA_ReportLine_ID, String trxName)
@@ -262,25 +260,6 @@ public class X_PA_ReportLine extends PO implements I_PA_ReportLine, I_Persistent
 	public String getLineType()
 	{
 		return (String)get_Value(COLUMNNAME_LineType);
-	}
-
-	/** Set Multiplier.
-		@param Multiplier Type Multiplier (Credit = -1)
-	*/
-	public void setMultiplier (BigDecimal Multiplier)
-	{
-		set_ValueNoCheck (COLUMNNAME_Multiplier, Multiplier);
-	}
-
-	/** Get Multiplier.
-		@return Type Multiplier (Credit = -1)
-	  */
-	public BigDecimal getMultiplier()
-	{
-		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_Multiplier);
-		if (bd == null)
-			 return Env.ZERO;
-		return bd;
 	}
 
 	/** Set Name.
@@ -526,7 +505,7 @@ public class X_PA_ReportLine extends PO implements I_PA_ReportLine, I_Persistent
 	public static final String POSTINGTYPE_Reservation = "R";
 	/** Statistical = S */
 	public static final String POSTINGTYPE_Statistical = "S";
-	/** Set Posting Type.
+	/** Set PostingType.
 		@param PostingType The type of posted amount for the transaction
 	*/
 	public void setPostingType (String PostingType)
@@ -535,30 +514,12 @@ public class X_PA_ReportLine extends PO implements I_PA_ReportLine, I_Persistent
 		set_Value (COLUMNNAME_PostingType, PostingType);
 	}
 
-	/** Get Posting Type.
+	/** Get PostingType.
 		@return The type of posted amount for the transaction
 	  */
 	public String getPostingType()
 	{
 		return (String)get_Value(COLUMNNAME_PostingType);
-	}
-
-	/** Set Round Factor.
-		@param RoundFactor Round Factor
-	*/
-	public void setRoundFactor (int RoundFactor)
-	{
-		set_Value (COLUMNNAME_RoundFactor, Integer.valueOf(RoundFactor));
-	}
-
-	/** Get Round Factor.
-		@return Round Factor	  */
-	public int getRoundFactor()
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_RoundFactor);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
 	}
 
 	/** Set Sequence.

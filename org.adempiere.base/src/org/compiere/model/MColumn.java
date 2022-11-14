@@ -539,10 +539,6 @@ public class MColumn extends X_AD_Column implements ImmutablePOSupport
 			}
 		}
 
-		if (getAD_Reference_ID() != DisplayType.Button && get_Value(COLUMNNAME_AD_InfoWindow_ID) != null) {
-			set_Value(COLUMNNAME_AD_InfoWindow_ID, null);
-		}
-		
 		return true;
 	}	//	beforeSave
 	

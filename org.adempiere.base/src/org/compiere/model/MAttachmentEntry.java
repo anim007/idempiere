@@ -108,9 +108,6 @@ public class MAttachmentEntry
 	/** Lazy Data Source */
 	private IAttachmentLazyDataSource m_ds = null;
 
-	/** True if the entry has been updated (sets by MAttachment.updateEntry(int, byte[]) */
-	private boolean m_isUpdated = false;
-
 	/**
 	 * @return Returns the data.
 	 */
@@ -353,20 +350,6 @@ public class MAttachmentEntry
 	 */
 	public IAttachmentLazyDataSource getLazyDataSource() {
 		return m_ds;
-	}
-
-	/** Set the updated property 
-	 * @param updated
-	 */
-	public void setUpdated(boolean updated) {
-		m_isUpdated = updated;
-	}
-
-	/** Get the updated property 
-	 * @return updated
-	 */
-	public boolean isUpdated() {
-		return m_isUpdated;
 	}
 
 }	//	MAttachmentItem

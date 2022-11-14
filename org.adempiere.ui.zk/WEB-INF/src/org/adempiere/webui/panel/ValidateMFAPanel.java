@@ -134,8 +134,6 @@ public class ValidateMFAPanel extends Window implements EventListener<Event> {
 
 			if (m_autoCall) {
 				validateMFAComplete(true);
-			} else {
-				m_showMFAPanel = true;
 			}
 
 		} else {
